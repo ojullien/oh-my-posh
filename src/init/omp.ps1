@@ -105,3 +105,22 @@ function global:Export-PoshTheme {
     $configString = @(&$omp --config="$config" --config-format="$Format" --print-config 2>&1)
     [IO.File]::WriteAllLines($FilePath, $configString)
 }
+
+function global:Export-PoshImage {
+    param(
+        [Parameter(Mandatory = $false)]
+        [string]
+        $Author
+    )
+
+    if ($Author) {
+        $Author = "--author=$Author"
+    }
+
+    $omp = "::OMP::"
+    $config = $global:PoshSettings.Theme
+    $cleanPWD = $PWD.ProviderPath.TrimEnd("\")
+    $cleanPSWD = $PWD.ToString().TrimEnd("\")
+    $standardOut = @(&$omp --config="$config" --pwd="$cleanPWD" --pswd="$cleanPSWD"  --export-png $Author 2>&1)
+    $standardOut -join "`n"
+}

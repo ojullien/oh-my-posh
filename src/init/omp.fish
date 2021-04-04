@@ -36,3 +36,12 @@ function export_poshconfig
   end
   ::OMP:: --config $posh_theme --print-config --config-format $format > $file_name
 end
+
+function export_poshimage
+  set -l author $argv[1]
+  if not test -n "$author"
+    ::OMP:: --config $posh_theme --export-png --shell shell
+    return
+  end
+  ::OMP:: --config $posh_theme --export-png --shell shell --author $author
+end

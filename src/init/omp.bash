@@ -37,3 +37,12 @@ function export_poshconfig() {
     fi
     ::OMP:: --config $POSH_THEME --print-config --config-format $format > $1
 }
+
+function export_poshimage() {
+    author=$1
+    if [ -z "$author" ]; then
+      ::OMP:: --config $POSH_THEME --export-png --shell shell
+      return
+    fi
+    ::OMP:: --config $POSH_THEME --export-png --shell shell --author $author
+}
